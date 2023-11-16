@@ -27,14 +27,14 @@ public class CarrosControl {
     public void createCarro(String placa, Short ano, String marca, String modelo, String cor, Double preco) {
         try {
             carrosDAO.create(placa, ano, marca, modelo, cor, preco);
+
+            Carro carro = new Carro(placa, ano, marca, modelo, cor, preco);
+            carros.add(carro);
+
+            atualizarTabela();
         } catch (SQLException e) {
             e.printStackTrace();
         }
-
-        Carro carro = new Carro(placa, ano, marca, modelo, cor, preco);
-        carros.add(carro);
-
-        atualizarTabela();
     }
 
     //---=| UPDATE |=---//
@@ -42,14 +42,14 @@ public class CarrosControl {
         if (linhaSelecionada != -1) {
             try {
                 carrosDAO.update(placa, ano, marca, modelo, cor, preco);
+                
+                Carro carro = new Carro(placa, ano, marca, modelo, cor, preco);
+                carros.set(linhaSelecionada, carro);
+    
+                atualizarTabela();
             } catch (SQLException e) {
                 e.printStackTrace();
             }
-
-            Carro carro = new Carro(placa, ano, marca, modelo, cor, preco);
-            carros.set(linhaSelecionada, carro);
-
-            atualizarTabela();
         }
     }
 

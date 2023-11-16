@@ -30,7 +30,8 @@ public class PainelCarros extends JPanel {
     private JTable table;
     private DefaultTableModel tableModel;
     private int linhaSelecionada = -1;
-    CarrosControl carrosControl = new CarrosControl(carros, tableModel, table);
+
+    private CarrosControl carrosControl;
 
     // Construtor(GUI-JPanel)
     public PainelCarros() {
@@ -86,19 +87,66 @@ public class PainelCarros extends JPanel {
             public void mouseClicked(MouseEvent evt) {
                 linhaSelecionada = table.rowAtPoint(evt.getPoint());
                 if (linhaSelecionada != -1) {
-                    carPlacaField.setText((String) table.getValueAt(linhaSelecionada, 0));
-                    carAnoField.setText((String) table.getValueAt(linhaSelecionada, 1));
-                    carMarcaField.setText(table.getValueAt(linhaSelecionada, 2).toString());
-                    carModeloField.setText((String) table.getValueAt(linhaSelecionada, 0));
-                    carCorField.setText(table.getValueAt(linhaSelecionada, 2).toString());
-                    carPrecoField.setText(table.getValueAt(linhaSelecionada, 2).toString());
+                    carPlacaField.setText(String.valueOf(table.getValueAt(linhaSelecionada, 0)));
+                    carAnoField.setText(String.valueOf(table.getValueAt(linhaSelecionada, 1)));
+                    carMarcaField.setText(String.valueOf(table.getValueAt(linhaSelecionada, 2).toString()));
+                    carModeloField.setText(String.valueOf(table.getValueAt(linhaSelecionada, 3)));
+                    carCorField.setText(String.valueOf(table.getValueAt(linhaSelecionada, 4).toString()));
+                    carPrecoField.setText(String.valueOf(table.getValueAt(linhaSelecionada, 5).toString()));
                 }
             }
         });
 
         // Botão de cadastrar
-        cadastrar.addMouseListener(new MouseAdapter(MouseEvent evt) {
-             carrosControl.createCarro(carPlacaField.getText(), carAnoField.getText(), TOOL_TIP_TEXT_KEY, TOOL_TIP_TEXT_KEY, TOOL_TIP_TEXT_KEY, null);
+        cadastrar.addMouseListener(new MouseAdapter() {
+            @Override
+            public void mouseClicked(MouseEvent evt) {
+                carrosControl = new CarrosControl(carros, tableModel, table);
+
+                carrosControl.createCarro(carPlacaField.getText(), Short.valueOf(carAnoField.getText()), carMarcaField.getText(), carModeloField.getText(), carCorField.getText(), Double.valueOf(carPrecoField.getText()));
+
+                // Resetando os campos
+                carPlacaField.setText("");
+                carAnoField.setText("");
+                carMarcaField.setText("");
+                carModeloField.setText("");
+                carCorField.setText("");
+                carPrecoField.setText("");
+
+                atualizarTabela();
+            }
+        });
+
+        // Botão de editar
+        editar.addMouseListener(new MouseAdapter() {
+            @Override
+            public void mouseClicked(MouseEvent evt){
+                carrosControl = new CarrosControl(carros, tableModel, table);
+
+                carrosControl.updateCarro(linhaSelecionada, carPlacaField.getText(), Short.valueOf(carAnoField.getText()), carMarcaField.getText(), carModeloField.getText(), carCorField.getText(), Double.valueOf(carPrecoField.getText()));
+
+                atualizarTabela();
+            }
+        });
+
+        // Botão de apagar
+        apagar.addMouseListener(new MouseAdapter() {
+            @Override
+            public void mouseClicked(MouseEvent evt){
+                carrosControl = new CarrosControl(carros, tableModel, table);
+
+                carrosControl.deleteCarro(linhaSelecionada, carPlacaField.getText());
+
+                // Resetando os campos
+                carPlacaField.setText("");
+                carAnoField.setText("");
+                carMarcaField.setText("");
+                carModeloField.setText("");
+                carCorField.setText("");
+                carPrecoField.setText("");
+
+                atualizarTabela();
+            }
         });
     }
 

@@ -25,7 +25,7 @@ public class CarrosDAO {
     //-----===| MÉTODOS CRUD |===-----//
     //---=| CREATE |=---//
     public void create(String placa, Short ano, String marca, String modelo, String cor, double preco) throws SQLException {
-        String query = "INSERT INTO carros (placa, ano, marca, modelo, cor, preco) VALUES (?, ?, ?, ?, ?, ?, ?)";
+        String query = "INSERT INTO carros (placa, ano, marca, modelo, cor, preco) VALUES (?, ?, ?, ?, ?, ?)";
 
         PreparedStatement preparedStatement = connection.prepareStatement(query);
         try {
@@ -35,7 +35,7 @@ public class CarrosDAO {
             preparedStatement.setString(4, modelo);
             preparedStatement.setString(5, cor);
             preparedStatement.setDouble(6, preco);
-            preparedStatement.executeQuery();
+            preparedStatement.execute();
 
             System.out.println("Dados inseridos com sucesso");
 
@@ -58,19 +58,15 @@ public class CarrosDAO {
         
         PreparedStatement preparedStatement = connection.prepareStatement(query);
         try {
-            System.out.println("msg 1");
             resultSet = preparedStatement.executeQuery();
             // Loop para armazenar as informações do resultSet para a List<Carro>
 
             while(resultSet.next()){
-                System.out.println("msg 2");
                 Carro carro = new Carro(resultSet.getString("placa"), resultSet.getShort("ano"), resultSet.getString("marca"), resultSet.getString("modelo"), resultSet.getString("cor"), resultSet.getDouble("preco")); // Instanciando carro com as informações optidas pela query
-                System.out.println("msg 3");
 
                 //Adicionando objeto instanciado à lista
                 carros.add(carro);
             }
-            System.out.println("msg 4");
             // Fechando prepared statement 
             ConnectionFactory.closePreparedStatement(preparedStatement);
         } catch (Exception e) {
@@ -81,7 +77,6 @@ public class CarrosDAO {
             ConnectionFactory.closeConnection(connection);
         }
 
-        System.out.println("msg 5");
         // Retornando lista (list<carro>)
         return carros;
     }
@@ -130,7 +125,7 @@ public class CarrosDAO {
             preparedStatement.setString(4, cor);
             preparedStatement.setDouble(5, preco);
             preparedStatement.setString(6, placa);
-            preparedStatement.executeQuery();
+            preparedStatement.execute();
 
             System.out.println("Dados atualizados com sucesso");
 
