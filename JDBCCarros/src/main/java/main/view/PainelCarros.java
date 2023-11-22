@@ -175,3 +175,26 @@ public class PainelCarros extends JPanel {
         }
     }
 }
+
+
+
+
+
+
+
+//Exemplo do VendasView com combobox (mostrar apenas o que for selecionado)
+// public class VendasView extends JPamel{
+//     JComboBox<String> carrosComboBox;
+//     List<Carros> carros;
+//     public VendasView() {
+//         carrosComboBox = new JComboBox<>();
+//         //Preencher o comboBox com os carros
+//         carros = new CarrosDAO().readAll();
+//         carrosComboBox.addItem("Selecione o Carro");
+    
+//         for (Carro carro : carros){
+//             carrosComboBox.addItem(carro.getMarca() +" "+ carro.getModelo() +" "+ carro.getPlaca());
+//         }
+//         add(carrosComboBox);
+//     }
+// }

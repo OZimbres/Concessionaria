@@ -1,0 +1,14 @@
+/workspaces/Concessionaria/JDBCCarros/src/main/java/main/view/FrameApp.java
+/workspaces/Concessionaria/JDBCCarros/src/main/java/main/control/PessoasControl.java
+/workspaces/Concessionaria/JDBCCarros/src/main/java/main/connection/ConnectionFactory.java
+/workspaces/Concessionaria/JDBCCarros/src/main/java/main/model/Pessoa.java
+/workspaces/Concessionaria/JDBCCarros/src/main/java/main/Main.java
+/workspaces/Concessionaria/JDBCCarros/src/main/java/main/control/PessoasDAO.java
+/workspaces/Concessionaria/JDBCCarros/src/main/java/main/control/CarrosDAO.java
+/workspaces/Concessionaria/JDBCCarros/src/main/java/main/view/PainelPessoas.java
+/workspaces/Concessionaria/JDBCCarros/src/main/java/main/model/Carro.java
+/workspaces/Concessionaria/JDBCCarros/src/main/java/main/logs/RegistroOperacoes.java
+/workspaces/Concessionaria/JDBCCarros/src/main/java/main/view/TabbedApp.java
+/workspaces/Concessionaria/JDBCCarros/src/main/java/main/control/CarrosControl.java
+/workspaces/Concessionaria/JDBCCarros/src/main/java/main/view/Login.java
+/workspaces/Concessionaria/JDBCCarros/src/main/java/main/view/PainelCarros.java
