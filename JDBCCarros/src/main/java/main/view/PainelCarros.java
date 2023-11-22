@@ -33,6 +33,8 @@ public class PainelCarros extends JPanel {
 
     private CarrosControl carrosControl;
 
+    private PainelVendas painelVendas;
+
     // Construtor(GUI-JPanel)
     public PainelCarros() {
         super();
@@ -78,7 +80,7 @@ public class PainelCarros extends JPanel {
         // tabela de carros
         JScrollPane jSPane = new JScrollPane();
         this.add(jSPane);
-        tableModel = new DefaultTableModel(new Object[][] {}, new String[] { "Placa", "Ano", "Marca", "Modelo", "Cor", "Preço" });
+        tableModel = new DefaultTableModel(new Object[][] {}, new String[] { "Placa", "Ano", "Marca", "Modelo", "Cor", "Preço", "Status" }); // Status = Vendido (True or False)
         table = new JTable(tableModel);
         jSPane.setViewportView(table);
 
@@ -119,7 +121,10 @@ public class PainelCarros extends JPanel {
                 carCorField.setText("");
                 carPrecoField.setText("");
 
+                // Atualizar tabela do painel de Carros
                 atualizarTabela();
+                // Atualizar listagem do painel de vendas
+                painelVendas = new PainelVendas();                
             }
         });
 
@@ -131,7 +136,10 @@ public class PainelCarros extends JPanel {
 
                 carrosControl.updateCarro(linhaSelecionada, carPlacaField.getText(), Short.valueOf(carAnoField.getText()), carMarcaField.getText(), carModeloField.getText(), carCorField.getText(), Double.valueOf(carPrecoField.getText()));
 
+                // Atualizar tabela do painel de Carros
                 atualizarTabela();
+                // Atualizar listagem do painel de vendas
+                painelVendas = new PainelVendas();    
             }
         });
 
@@ -151,7 +159,10 @@ public class PainelCarros extends JPanel {
                 carCorField.setText("");
                 carPrecoField.setText("");
 
+                // Atualizar tabela do painel de Carros
                 atualizarTabela();
+                // Atualizar listagem do painel de vendas
+                painelVendas = new PainelVendas();    
             }
         });
     }
@@ -160,7 +171,8 @@ public class PainelCarros extends JPanel {
         try {
             tableModel.setRowCount(0);
             carros = new CarrosDAO().readAll();
-            Object linha[] = new Object[6];
+            Object linha[] = new Object[7];
+
             for(int i=0; i < carros.size(); i++){
                 linha[0] = carros.get(i).getPlaca();
                 linha[1] = carros.get(i).getAno();
@@ -168,6 +180,7 @@ public class PainelCarros extends JPanel {
                 linha[3] = carros.get(i).getModelo();
                 linha[4] = carros.get(i).getCor();
                 linha[5] = carros.get(i).getPreco();
+                linha[6] = (carros.get(i).getVendido()) ? "Vendido" : "Disponível";
                 tableModel.addRow(linha);
             }
         } catch (SQLException e) {
@@ -175,26 +188,3 @@ public class PainelCarros extends JPanel {
         }
     }
 }
-
-
-
-
-
-
-
-//Exemplo do VendasView com combobox (mostrar apenas o que for selecionado)
-// public class VendasView extends JPamel{
-//     JComboBox<String> carrosComboBox;
-//     List<Carros> carros;
-//     public VendasView() {
-//         carrosComboBox = new JComboBox<>();
-//         //Preencher o comboBox com os carros
-//         carros = new CarrosDAO().readAll();
-//         carrosComboBox.addItem("Selecione o Carro");
-    
-//         for (Carro carro : carros){
-//             carrosComboBox.addItem(carro.getMarca() +" "+ carro.getModelo() +" "+ carro.getPlaca());
-//         }
-//         add(carrosComboBox);
-//     }
-// }

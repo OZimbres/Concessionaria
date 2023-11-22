@@ -8,17 +8,19 @@ public class Carro {
     private String modelo;
     private String cor;
     private Double preco;
+    private Boolean vendido;
     
     //-----===| CONSTRUTOR |===-----//
     public Carro() {}
 
-    public Carro(String placa, Short ano, String marca, String modelo, String cor, Double preco) {
+    public Carro(String placa, Short ano, String marca, String modelo, String cor, Double preco, Boolean vendido) {
         this.placa = placa;
         this.ano = ano;
         this.marca = marca;
         this.modelo = modelo;
         this.cor = cor;
         this.preco = preco;
+        this.vendido = vendido;
     }
     
     //-----===| GETTERS & SETTERS |===-----//    
@@ -62,5 +64,12 @@ public class Carro {
     }
     public void setPreco(Double preco) {
         this.preco = preco;
+    }
+
+    public Boolean getVendido() {
+        return vendido;
+    }
+    public void setVendido(Boolean vendido) {
+        this.vendido = vendido;
     }
 }

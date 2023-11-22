@@ -24,7 +24,7 @@ public class PessoasControl {
 
     // -----===| MÉTODOS CRUD |===-----//
     // ---=| CREATE |=---//
-    public void createPessoa(Integer cpf, String nome, Integer telefone, String rua, String numero, Integer cep, String senha, boolean funcionario) {
+    public void createPessoa(Long cpf, String nome, Long telefone, String rua, String numero, Integer cep, String senha, boolean funcionario) {
         try {
             pessoasDAO.create(cpf, nome, telefone, rua, numero, cep, senha, funcionario);
 
@@ -38,7 +38,7 @@ public class PessoasControl {
     }
 
     //---=| UPDATE |=---//
-    public void updatePessoa(int linhaSelecionada, Integer cpf, String nome, Integer telefone, String rua, String numero, Integer cep, String senha, boolean funcionario) {
+    public void updatePessoa(int linhaSelecionada, Long cpf, String nome, Long telefone, String rua, String numero, Integer cep, String senha, boolean funcionario) {
         if (linhaSelecionada != -1) {
             try {
                 pessoasDAO.update(cpf, nome, telefone, rua, numero, cep, senha, funcionario);
@@ -54,7 +54,7 @@ public class PessoasControl {
     }
 
     //---=| DELETE |=---//
-    public void deletePessoa(int linhaSelecionada, Integer cpf) {
+    public void deletePessoa(int linhaSelecionada, Long cpf) {
         try {
             if(linhaSelecionada != 1){
                 pessoasDAO.delete(cpf);

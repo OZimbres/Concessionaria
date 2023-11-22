@@ -62,7 +62,7 @@ public class CarrosDAO {
             // Loop para armazenar as informações do resultSet para a List<Carro>
 
             while(resultSet.next()){
-                Carro carro = new Carro(resultSet.getString("placa"), resultSet.getShort("ano"), resultSet.getString("marca"), resultSet.getString("modelo"), resultSet.getString("cor"), resultSet.getDouble("preco")); // Instanciando carro com as informações optidas pela query
+                Carro carro = new Carro(resultSet.getString("placa"), resultSet.getShort("ano"), resultSet.getString("marca"), resultSet.getString("modelo"), resultSet.getString("cor"), resultSet.getDouble("preco"), resultSet.getBoolean("vendido")); // Instanciando carro com as informações optidas pela query
 
                 //Adicionando objeto instanciado à lista
                 carros.add(carro);
@@ -95,7 +95,7 @@ public class CarrosDAO {
             // Loop para armazenar as informações do resultSet para a List<Carro>
 
             while(resultSet.next()){
-                Carro carro = new Carro(resultSet.getString("placa"), resultSet.getShort("ano"), resultSet.getString("marca"), resultSet.getString("modelo"), resultSet.getString("cor"), resultSet.getDouble("preco")); // Instanciando carro com as informações optidas pela query
+                Carro carro = new Carro(resultSet.getString("placa"), resultSet.getShort("ano"), resultSet.getString("marca"), resultSet.getString("modelo"), resultSet.getString("cor"), resultSet.getDouble("preco"), resultSet.getBoolean("vendido")); // Instanciando carro com as informações optidas pela query
 
                 //Adicionando objeto instanciado à lista
                 carros.add(carro);

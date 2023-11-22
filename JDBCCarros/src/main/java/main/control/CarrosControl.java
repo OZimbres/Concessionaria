@@ -28,7 +28,7 @@ public class CarrosControl {
         try {
             carrosDAO.create(placa, ano, marca, modelo, cor, preco);
 
-            Carro carro = new Carro(placa, ano, marca, modelo, cor, preco);
+            Carro carro = new Carro(placa, ano, marca, modelo, cor, preco, false);
             carros.add(carro);
 
             atualizarTabela();
@@ -43,7 +43,7 @@ public class CarrosControl {
             try {
                 carrosDAO.update(placa, ano, marca, modelo, cor, preco);
                 
-                Carro carro = new Carro(placa, ano, marca, modelo, cor, preco);
+                Carro carro = new Carro(placa, ano, marca, modelo, cor, preco, false);
                 carros.set(linhaSelecionada, carro);
     
                 atualizarTabela();

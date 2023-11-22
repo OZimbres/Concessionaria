@@ -2,9 +2,9 @@ package main.model;
 
 public class Pessoa {
     //-----===| ATRIBUTOS |===-----//
-    private Integer cpf;
+    private Long cpf;
     private String nome;
-    private Integer telefone;
+    private Long telefone;
     private String rua;
     private String numero;
     private Integer cep;
@@ -14,7 +14,7 @@ public class Pessoa {
     //-----===| CONSTRUTOR |===-----//
     public Pessoa() {}
 
-    public Pessoa(Integer cpf, String nome, Integer telefone, String rua, String numero, Integer cep, String senha, boolean funcionario) {
+    public Pessoa(Long cpf, String nome, Long telefone, String rua, String numero, Integer cep, String senha, boolean funcionario) {
         this.cpf = cpf;
         this.nome = nome;
         this.telefone = telefone;
@@ -26,10 +26,10 @@ public class Pessoa {
     }
     
     //-----===| GETTERS & SETTERS |===-----//
-    public Integer getCpf() {
+    public Long getCpf() {
         return cpf;
     }
-    public void setCpf(Integer cpf) {
+    public void setCpf(Long cpf) {
         this.cpf = cpf;
     }
 
@@ -40,10 +40,10 @@ public class Pessoa {
         this.nome = nome;
     }
 
-    public Integer getTelefone() {
+    public Long getTelefone() {
         return telefone;
     }
-    public void setTelefone(Integer telefone) {
+    public void setTelefone(Long telefone) {
         this.telefone = telefone;
     }
 
@@ -82,3 +82,6 @@ public class Pessoa {
         this.funcionario = funcionario;
     }
 }
+
+
+//VENDAS: id_venda, carro_placa, cpf_cliente, cpf_vendedor

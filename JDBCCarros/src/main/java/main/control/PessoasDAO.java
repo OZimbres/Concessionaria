@@ -24,14 +24,14 @@ public class PessoasDAO {
 
     //-----===| MÉTODOS CRUD |===-----//
     //---=| CREATE |=---//
-    public void create(Integer cpf, String nome, Integer telefone, String rua, String numero, Integer cep, String senha, boolean funcionario) throws SQLException {
+    public void create(Long cpf, String nome, Long telefone, String rua, String numero, Integer cep, String senha, boolean funcionario) throws SQLException {
         String query = "INSERT INTO Pessoas (cpf, nome, telefone, rua, numero, cep, senha, funcionario) VALUES (?, ?, ?, ?, ?, ?, ?, ?)";
 
         PreparedStatement preparedStatement = connection.prepareStatement(query);
         try {
-            preparedStatement.setInt(1, cpf);
+            preparedStatement.setLong(1, cpf);
             preparedStatement.setString(2, nome);
-            preparedStatement.setInt(3, telefone);
+            preparedStatement.setLong(3, telefone);
             preparedStatement.setString(4, rua);
             preparedStatement.setString(5, numero);
             preparedStatement.setDouble(6, cep);
@@ -64,7 +64,7 @@ public class PessoasDAO {
             // Loop para armazenar as informações do resultSet para a List<Pessoa>
 
             while(resultSet.next()){
-                Pessoa Pessoa = new Pessoa(resultSet.getInt("cpf"), resultSet.getString("nome"), resultSet.getInt("telefone"), resultSet.getString("rua"), resultSet.getString("numero"), resultSet.getInt("cep"), resultSet.getString("senha"), resultSet.getBoolean("funcionario")); // Instanciando Pessoa com as informações optidas pela query
+                Pessoa Pessoa = new Pessoa(resultSet.getLong("cpf"), resultSet.getString("nome"), resultSet.getLong("telefone"), resultSet.getString("rua"), resultSet.getString("numero"), resultSet.getInt("cep"), resultSet.getString("senha"), resultSet.getBoolean("funcionario")); // Instanciando Pessoa com as informações optidas pela query
 
                 //Adicionando objeto instanciado à lista
                 pessoas.add(Pessoa);
@@ -97,7 +97,7 @@ public class PessoasDAO {
             // Loop para armazenar as informações do resultSet para a List<Pessoa>
 
             while(resultSet.next()){
-                Pessoa Pessoa = new Pessoa(resultSet.getInt("cpf"), resultSet.getString("nome"), resultSet.getInt("telefone"), resultSet.getString("rua"), resultSet.getString("numero"), resultSet.getInt("cep"), resultSet.getString("senha"), resultSet.getBoolean("funcionario")); // Instanciando Pessoa com as informações optidas pela query
+                Pessoa Pessoa = new Pessoa(resultSet.getLong("cpf"), resultSet.getString("nome"), resultSet.getLong("telefone"), resultSet.getString("rua"), resultSet.getString("numero"), resultSet.getInt("cep"), resultSet.getString("senha"), resultSet.getBoolean("funcionario")); // Instanciando Pessoa com as informações optidas pela query
 
                 //Adicionando objeto instanciado à lista
                 pessoas.add(Pessoa);
@@ -116,19 +116,19 @@ public class PessoasDAO {
     }
 
     //---=| UPDATE |=---//
-    public void update(Integer cpf, String nome, Integer telefone, String rua, String numero, Integer cep, String senha, boolean funcionario) throws SQLException {
+    public void update(Long cpf, String nome, Long telefone, String rua, String numero, Integer cep, String senha, boolean funcionario) throws SQLException {
         String query = "UPDATE Pessoas SET nome = ?, telefone = ?, rua = ?, numero = ?, cep = ?, senha = ?, funcionario = ? WHERE cpf = ?";
 
         PreparedStatement preparedStatement = connection.prepareStatement(query);
         try {
             preparedStatement.setString(1, nome);
-            preparedStatement.setInt(2, telefone);
+            preparedStatement.setLong(2, telefone);
             preparedStatement.setString(3, rua);
             preparedStatement.setString(4, numero);
             preparedStatement.setInt(5, cep);
             preparedStatement.setString(6, senha);
             preparedStatement.setBoolean(7, funcionario);
-            preparedStatement.setInt(8, cpf);
+            preparedStatement.setLong(8, cpf);
             preparedStatement.execute();
 
             System.out.println("Dados atualizados com sucesso");
@@ -144,12 +144,12 @@ public class PessoasDAO {
     }
 
     //---=| DELETE |=---//
-    public void delete(Integer cpf) throws SQLException {
+    public void delete(Long cpf) throws SQLException {
         String query = "DELETE FROM Pessoas WHERE cpf = ?";
 
         PreparedStatement preparedStatement = connection.prepareStatement(query);
         try {
-            preparedStatement.setInt(1, cpf);
+            preparedStatement.setLong(1, cpf);
             preparedStatement.executeUpdate();
 
             JOptionPane.showMessageDialog(null, "Excluido com sucesso!");

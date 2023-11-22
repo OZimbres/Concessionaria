@@ -82,8 +82,8 @@ public class PainelPessoas extends JPanel {
         botoes.add(cadastrar = new JButton("Cadastrar"));
         botoes.add(editar = new JButton("Editar"));
         botoes.add(apagar = new JButton("Apagar"));
-
-        add(botoes);
+        this.add(botoes);
+        
         // tabela de Pessoas
         JScrollPane jSPane = new JScrollPane();
         add(jSPane);
@@ -120,7 +120,17 @@ public class PainelPessoas extends JPanel {
             public void mouseClicked(MouseEvent evt) {
                 pessoasControl = new PessoasControl(pessoas, tableModel, table);
 
-                pessoasControl.createPessoa(Integer.valueOf(pessoaCpfField.getText()), pessoaNomeField.getText(), Integer.valueOf(pessoaTelefoneField.getText()), pessoaRuaField.getText(), pessoaNumeroField.getText(), Integer.valueOf(pessoaNomeField.getText()), pessoaSenhaField.getText(), pessoaFuncionarioField.isSelected());
+                // Variáveis temporárias
+                Long cpf = Long.valueOf(pessoaCpfField.getText());
+                String nome = pessoaNomeField.getText();
+                Long telefone = Long.valueOf(pessoaTelefoneField.getText());
+                String rua = pessoaRuaField.getText();
+                String numero = pessoaNumeroField.getText();
+                Integer cep = Integer.valueOf(pessoaCepField.getText());
+                String senha = pessoaSenhaField.getText();
+                Boolean funcionario = pessoaFuncionarioField.isSelected();
+                // Passando variaveis temporárias como parâmetro
+                pessoasControl.createPessoa(cpf, nome, telefone, rua, numero, cep, senha, funcionario);
 
                 // Resetando os campos
                 pessoaCpfField.setText("");
@@ -130,7 +140,7 @@ public class PainelPessoas extends JPanel {
                 pessoaNumeroField.setText("");
                 pessoaCepField.setText("");
                 pessoaSenhaField.setText("");
-                pessoaFuncionarioField.setText("");
+                pessoaFuncionarioField.setSelected(false);
 
                 atualizarTabela();
             }
@@ -142,7 +152,17 @@ public class PainelPessoas extends JPanel {
             public void mouseClicked(MouseEvent evt){
                 pessoasControl = new PessoasControl(pessoas, tableModel, table);
 
-                pessoasControl.updatePessoa(linhaSelecionada, Integer.valueOf(pessoaCpfField.getText()), pessoaNomeField.getText(), Integer.valueOf(pessoaTelefoneField.getText()), pessoaRuaField.getText(), pessoaNumeroField.getText(), Integer.valueOf(pessoaNomeField.getText()), pessoaSenhaField.getText(), Boolean.valueOf(pessoaFuncionarioField.getText()));
+                // Variáveis temporárias
+                Long cpf = Long.valueOf(pessoaCpfField.getText());
+                String nome = pessoaNomeField.getText();
+                Long telefone = Long.valueOf(pessoaTelefoneField.getText());
+                String rua = pessoaRuaField.getText();
+                String numero = pessoaNumeroField.getText();
+                Integer cep = Integer.valueOf(pessoaCepField.getText());
+                String senha = pessoaSenhaField.getText();
+                Boolean funcionario = pessoaFuncionarioField.isSelected();
+                // Passando variaveis temporárias como parâmetro
+                pessoasControl.updatePessoa(linhaSelecionada, cpf, nome, telefone, rua, numero, cep, senha, funcionario);
 
                 atualizarTabela();
             }
@@ -154,7 +174,7 @@ public class PainelPessoas extends JPanel {
             public void mouseClicked(MouseEvent evt){
                 pessoasControl = new PessoasControl(pessoas, tableModel, table);
 
-                pessoasControl.deletePessoa(linhaSelecionada, Integer.valueOf(pessoaCpfField.getText()));
+                pessoasControl.deletePessoa(linhaSelecionada, Long.valueOf(pessoaCpfField.getText()));
 
                 // Resetando os campos
                 pessoaCpfField.setText("");
@@ -163,6 +183,8 @@ public class PainelPessoas extends JPanel {
                 pessoaRuaField.setText("");
                 pessoaNumeroField.setText("");
                 pessoaCepField.setText("");
+                pessoaSenhaField.setText("");
+                pessoaFuncionarioField.setSelected(false);
 
                 atualizarTabela();
             }
@@ -174,15 +196,16 @@ public class PainelPessoas extends JPanel {
             tableModel.setRowCount(0);
             pessoas = new PessoasDAO().readAll();
             Object linha[] = new Object[8];
-        for (int i = 0; i < pessoas.size(); i++) {
-            linha[0] = pessoas.get(i).getCpf();
-            linha[1] = pessoas.get(i).getNome();
-            linha[2] = pessoas.get(i).getTelefone();
-            linha[3] = pessoas.get(i).getRua();
-            linha[4] = pessoas.get(i).getNumero();
-            linha[5] = pessoas.get(i).getCep();
-            linha[6] = pessoas.get(i).getSenha();
-            linha[7] = pessoas.get(i).getFuncionario();
+
+            for (int i = 0; i < pessoas.size(); i++) {
+                linha[0] = pessoas.get(i).getCpf();
+                linha[1] = pessoas.get(i).getNome();
+                linha[2] = pessoas.get(i).getTelefone();
+                linha[3] = pessoas.get(i).getRua();
+                linha[4] = pessoas.get(i).getNumero();
+                linha[5] = pessoas.get(i).getCep();
+                linha[6] = pessoas.get(i).getSenha();
+                linha[7] = (pessoas.get(i).getFuncionario()) ? "Funcionário" : "Cliente";
                 tableModel.addRow(linha);
             }
         } catch (SQLException e) {
