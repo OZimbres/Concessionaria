@@ -39,12 +39,12 @@ public class PessoasDAO {
             preparedStatement.setBoolean(8, funcionario);
             preparedStatement.execute();
 
-            System.out.println("Dados inseridos com sucesso");
+            JOptionPane.showMessageDialog(null, "Pessoa cadastrada com sucesso!");
 
             ConnectionFactory.closePreparedStatement(preparedStatement);
             ConnectionFactory.closeConnection(connection);
-        } catch (SQLException e) {
-            throw new RuntimeException("Erro ao inserir dados no banco de dados.", e);
+        } catch (SQLException ex) {
+            JOptionPane.showMessageDialog(null, "Erro ao excluir: " + ex);
         } finally {
             ConnectionFactory.closePreparedStatement(preparedStatement);
             ConnectionFactory.closeConnection(this.connection);
@@ -64,15 +64,16 @@ public class PessoasDAO {
             // Loop para armazenar as informações do resultSet para a List<Pessoa>
 
             while(resultSet.next()){
-                Pessoa Pessoa = new Pessoa(resultSet.getLong("cpf"), resultSet.getString("nome"), resultSet.getLong("telefone"), resultSet.getString("rua"), resultSet.getString("numero"), resultSet.getInt("cep"), resultSet.getString("senha"), resultSet.getBoolean("funcionario")); // Instanciando Pessoa com as informações optidas pela query
+                Pessoa pessoa = new Pessoa(resultSet.getLong("cpf"), resultSet.getString("nome"), resultSet.getLong("telefone"), resultSet.getString("rua"), resultSet.getString("numero"), resultSet.getInt("cep"), resultSet.getString("senha"), resultSet.getBoolean("funcionario")); // Instanciando Pessoa com as informações optidas pela query
 
-                //Adicionando objeto instanciado à lista
-                pessoas.add(Pessoa);
+                // Adicionando objeto instanciado à lista
+                pessoas.add(pessoa);
             }
             // Fechando prepared statement 
             ConnectionFactory.closePreparedStatement(preparedStatement);
-        } catch (Exception e) {
-            System.out.println(e.getMessage());
+            ConnectionFactory.closeConnection(connection);
+        } catch (SQLException ex) {
+            JOptionPane.showMessageDialog(null, "Erro ao consultar: " + ex);
         }
         finally { // Independente se deu certo ou não, tem que fechar a conexão
             ConnectionFactory.closePreparedStatement(preparedStatement);
@@ -104,8 +105,8 @@ public class PessoasDAO {
             }
             // Fechando prepared statement 
             ConnectionFactory.closePreparedStatement(preparedStatement);
-        } catch (Exception e) {
-            System.out.println(e.getMessage());
+        } catch (SQLException ex) {
+            JOptionPane.showMessageDialog(null, "Erro ao excluir: " + ex);
         }
         finally { // Independente se deu certo ou não, tem que fechar a conexão
             ConnectionFactory.closePreparedStatement(preparedStatement);
@@ -131,12 +132,10 @@ public class PessoasDAO {
             preparedStatement.setLong(8, cpf);
             preparedStatement.execute();
 
-            System.out.println("Dados atualizados com sucesso");
-
             ConnectionFactory.closePreparedStatement(preparedStatement);
             ConnectionFactory.closeConnection(connection);
-        } catch (Exception e) {
-            throw new RuntimeException("Erro ao inserir dados no banco de dados.", e);
+        } catch (SQLException ex) {
+            JOptionPane.showMessageDialog(null, "Erro ao atualizar: " + ex);
         } finally {
             ConnectionFactory.closePreparedStatement(preparedStatement);
             ConnectionFactory.closeConnection(this.connection);

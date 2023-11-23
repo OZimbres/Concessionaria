@@ -21,6 +21,7 @@ import java.awt.event.MouseEvent;
 import java.sql.SQLException;
 
 import main.model.Carro;
+import main.model.Login;
 
 public class PainelCarros extends JPanel {
     // Atributos(componentes)
@@ -36,7 +37,7 @@ public class PainelCarros extends JPanel {
     private PainelVendas painelVendas;
 
     // Construtor(GUI-JPanel)
-    public PainelCarros() {
+    public PainelCarros(Login logado) {
         super();
 
         // entrada de dados
@@ -124,7 +125,7 @@ public class PainelCarros extends JPanel {
                 // Atualizar tabela do painel de Carros
                 atualizarTabela();
                 // Atualizar listagem do painel de vendas
-                painelVendas = new PainelVendas();                
+                painelVendas = new PainelVendas(logado);                
             }
         });
 
@@ -139,7 +140,7 @@ public class PainelCarros extends JPanel {
                 // Atualizar tabela do painel de Carros
                 atualizarTabela();
                 // Atualizar listagem do painel de vendas
-                painelVendas = new PainelVendas();    
+                painelVendas = new PainelVendas(logado);    
             }
         });
 
@@ -162,7 +163,7 @@ public class PainelCarros extends JPanel {
                 // Atualizar tabela do painel de Carros
                 atualizarTabela();
                 // Atualizar listagem do painel de vendas
-                painelVendas = new PainelVendas();    
+                painelVendas = new PainelVendas(logado);    
             }
         });
     }

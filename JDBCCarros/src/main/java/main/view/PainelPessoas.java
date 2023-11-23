@@ -40,10 +40,11 @@ public class PainelPessoas extends JPanel {
         super();
 
         // entrada de dados
-        setLayout(new BoxLayout(this, BoxLayout.Y_AXIS));
+        this.setLayout(new BoxLayout(this, BoxLayout.Y_AXIS));
         this.add(new JLabel("Cadastro Pessoas"));
         JPanel inputPanel = new JPanel();
         inputPanel.setLayout(new GridLayout(8, 2));
+
         inputPanel.add(new JLabel("CPF"));
         pessoaCpfField = new JTextField(20);
         inputPanel.add(pessoaCpfField);
@@ -86,7 +87,7 @@ public class PainelPessoas extends JPanel {
         
         // tabela de Pessoas
         JScrollPane jSPane = new JScrollPane();
-        add(jSPane);
+        this.add(jSPane);
         tableModel = new DefaultTableModel(new Object[][] {}, new String[] { "CPF", "Nome", "Telefone", "Rua", "Número", "CEP", "Senha", "Funcionário" });
         table = new JTable(tableModel);
         jSPane.setViewportView(table);
