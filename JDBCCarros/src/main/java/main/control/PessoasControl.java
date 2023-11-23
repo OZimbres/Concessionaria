@@ -115,6 +115,7 @@ public class PessoasControl {
                 createPessoa(Long.valueOf(cpf), nome, Long.valueOf(telefone), rua, numero, Integer.valueOf(cep), senha, funcionario);
             }
         }
+        return true;
     }
 
     // Método para validar o formato do CPF
