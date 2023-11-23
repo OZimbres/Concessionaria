@@ -84,36 +84,34 @@ public class PessoasDAO {
         return pessoas;
     }
     //---=| READ |=---//
-    public List<Pessoa> read(String cpf) throws SQLException {
+    public Pessoa read(Long cpf) throws SQLException {
         ResultSet resultSet = null; // Objeto que armazena
-        pessoas = new ArrayList<>();
+        Pessoa pessoa;
 
         String query = "SELECT * FROM Pessoas WHERE cpf = ?;"; // SQL Query
         
         PreparedStatement preparedStatement = connection.prepareStatement(query);
         try {
-            preparedStatement.setString(1, cpf);
+            preparedStatement.setLong(1, cpf);
 
             resultSet = preparedStatement.executeQuery();
             // Loop para armazenar as informações do resultSet para a List<Pessoa>
 
-            while(resultSet.next()){
-                Pessoa Pessoa = new Pessoa(resultSet.getLong("cpf"), resultSet.getString("nome"), resultSet.getLong("telefone"), resultSet.getString("rua"), resultSet.getString("numero"), resultSet.getInt("cep"), resultSet.getString("senha"), resultSet.getBoolean("funcionario")); // Instanciando Pessoa com as informações optidas pela query
-
-                //Adicionando objeto instanciado à lista
-                pessoas.add(Pessoa);
+            if(resultSet.next()){
+                pessoa = new Pessoa(resultSet.getLong("cpf"), resultSet.getString("nome"), resultSet.getLong("telefone"), resultSet.getString("rua"), resultSet.getString("numero"), resultSet.getInt("cep"), resultSet.getString("senha"), resultSet.getBoolean("funcionario")); // Instanciando Pessoa com as informações optidas pela query
+                return pessoa;
             }
-            // Fechando prepared statement 
-            ConnectionFactory.closePreparedStatement(preparedStatement);
+            else{
+                return null;
+            }
         } catch (SQLException ex) {
             JOptionPane.showMessageDialog(null, "Erro ao excluir: " + ex);
+            return null;
         }
         finally { // Independente se deu certo ou não, tem que fechar a conexão
             ConnectionFactory.closePreparedStatement(preparedStatement);
             ConnectionFactory.closeConnection(connection);
         }
-        // Retornando lista (list<Pessoa>)
-        return pessoas;
     }
 
     //---=| UPDATE |=---//

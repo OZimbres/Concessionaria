@@ -81,7 +81,7 @@ public class CarrosDAO {
         return carros;
     }
     //---=| READ |=---//
-    public List<Carro> read(String placa) throws SQLException {
+    public Carro read(String placa) throws SQLException {
         ResultSet resultSet = null; // Objeto que armazena
         carros = new ArrayList<>();
 
@@ -91,6 +91,35 @@ public class CarrosDAO {
         try {
             preparedStatement.setString(1, placa);
 
+            resultSet = preparedStatement.executeQuery();
+            // Loop para armazenar as informações do resultSet para a List<Carro>
+
+            if(resultSet.next()){
+                Carro carro = new Carro(resultSet.getString("placa"), resultSet.getShort("ano"), resultSet.getString("marca"), resultSet.getString("modelo"), resultSet.getString("cor"), resultSet.getDouble("preco"), resultSet.getBoolean("vendido")); // Instanciando carro com as informações optidas pela query
+
+                return carro;
+            }
+            else{
+                return null;
+            }
+        } catch (Exception e) {
+            System.out.println(e.getMessage());
+            return null;
+        }
+        finally { // Independente se deu certo ou não, tem que fechar a conexão
+            ConnectionFactory.closePreparedStatement(preparedStatement);
+            ConnectionFactory.closeConnection(connection);
+        }
+    }
+    //---=| READ IS VENDIDO|=---//
+    public List<Carro> readIs_vendido() throws SQLException {
+        ResultSet resultSet = null; // Objeto que armazena
+        carros = new ArrayList<>();
+
+        String query = "SELECT * FROM carros WHERE vendido = FALSE;"; // SQL Query
+        
+        PreparedStatement preparedStatement = connection.prepareStatement(query);
+        try {
             resultSet = preparedStatement.executeQuery();
             // Loop para armazenar as informações do resultSet para a List<Carro>
 

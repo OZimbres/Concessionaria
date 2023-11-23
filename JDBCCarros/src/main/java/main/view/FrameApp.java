@@ -11,7 +11,7 @@ public class FrameApp extends JFrame {
         this.add(new TabbedApp(logado));
 
         //Setando janela
-        this.setBounds(550, 250, 800, 500);
+        this.setBounds(550, 250, 1200, 500);
         this.setDefaultCloseOperation(2);
         this.setVisible(true);
     }
