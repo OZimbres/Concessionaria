@@ -1,6 +1,7 @@
 package main.view;
 
 import javax.swing.JTabbedPane;
+import javax.swing.event.ChangeListener;
 
 import main.model.Login;
 
@@ -16,5 +17,10 @@ public class TabbedApp extends JTabbedPane {
         this.add("Carros", painelCarros);
         this.add("Pessoas", painelPessoas);
         this.add("Venda", painelVendas);
+
+        this.addChangeListener(e -> {
+            painelVendas.atualizarClientesComboBox();
+            painelVendas.atualizarCarrosComboBox();
+        });
     }
 }

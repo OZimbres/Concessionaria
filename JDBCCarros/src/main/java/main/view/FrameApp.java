@@ -6,7 +6,7 @@ import main.model.Login;
 
 public class FrameApp extends JFrame {
     public FrameApp(Login logado) {
-        super("Carros");
+        super("Concessionária ASJ");
 
         this.add(new TabbedApp(logado));
 

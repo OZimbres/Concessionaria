@@ -48,8 +48,8 @@ public class PainelVendas extends JPanel {
 
     private VendasControl vendasControl;
 
-    JComboBox<String> carrosComboBox;
-    JComboBox<String> clientesComboBox;
+    JComboBox<String> carrosComboBox = new JComboBox<>();
+    JComboBox<String> clientesComboBox = new JComboBox<>();
 
     private java.util.Date dataAtual;
     private Date dataAtualSql;
@@ -67,7 +67,6 @@ public class PainelVendas extends JPanel {
 
         // ComboBox para escolha de clientes/carros
         // Configurar ComboBox de carros
-        carrosComboBox = new JComboBox<>();
         carrosComboBox.addItem(null);
         try {
             carros = new CarrosDAO().readIs_vendido();
@@ -79,7 +78,6 @@ public class PainelVendas extends JPanel {
         }
 
         // Configurar ComboBox de clientes
-        clientesComboBox = new JComboBox<>();
         clientesComboBox.addItem(null);
         try {
             pessoas = new PessoasDAO().readAll();
@@ -124,8 +122,10 @@ public class PainelVendas extends JPanel {
                 try {
                     PessoasDAO pessoasDAO = new PessoasDAO();
                     Pessoa pessoa = new Pessoa();
-                    pessoa = pessoasDAO.read(Long.valueOf((String) clientesComboBox.getSelectedItem()));
-                    infoCliente.setText("Nome: "+ pessoa.getNome() +" | CPF: "+ pessoa.getCpf());
+                    if(clientesComboBox.getSelectedItem() != null){
+                        pessoa = pessoasDAO.read(Long.valueOf((String) clientesComboBox.getSelectedItem()));
+                        infoCliente.setText("Nome: "+ pessoa.getNome() +" | CPF: "+ pessoa.getCpf());
+                    }
                 } catch (SQLException e1) {
                     e1.printStackTrace();
                 }
@@ -137,8 +137,10 @@ public class PainelVendas extends JPanel {
                 try {
                     CarrosDAO carrosDAO = new CarrosDAO();
                     Carro carro = new Carro();
-                    carro = carrosDAO.read((String) carrosComboBox.getSelectedItem());
-                    infoCarro.setText("Placa: "+ carro.getPlaca() +" | Marca: "+ carro.getMarca() +" | Modelo: "+ carro.getModelo() +" | Cor: "+ carro.getCor() +" | Ano: "+ carro.getAno() +" | Preço: "+ carro.getPreco());
+                    if(carrosComboBox.getSelectedItem() != null){
+                        carro = carrosDAO.read((String) carrosComboBox.getSelectedItem());
+                        infoCarro.setText("Placa: "+ carro.getPlaca() +" | Marca: "+ carro.getMarca() +" | Modelo: "+ carro.getModelo() +" | Cor: "+ carro.getCor() +" | Ano: "+ carro.getAno() +" | Preço: "+ carro.getPreco());
+                    }
                 } catch (SQLException e1) {
                     e1.printStackTrace();
                 }
@@ -157,6 +159,16 @@ public class PainelVendas extends JPanel {
                 dataAtualSql = new Date(dataAtual.getTime());
 
                 vendasControl.createVenda(placaCarroSelecionado, cpfClienteSelecionado, logado.getCpf(), dataAtualSql);
+
+                // Resetando campos
+                clientesComboBox.setSelectedIndex(0);
+                infoCliente.setText("");
+                carrosComboBox.setSelectedIndex(0);
+                infoCarro.setText("");
+                atualizarClientesComboBox();
+                atualizarCarrosComboBox();
+
+                atualizarTabela();
             }
         });
     }
@@ -168,6 +180,33 @@ public class PainelVendas extends JPanel {
             vendas = new VendasDAO().readAll();
             for (Venda venda : vendas) {
                 tableModel.addRow(new Object[] { venda.getId_venda(), venda.getPlaca_carro(), venda.getCpf_cliente(), venda.getCpf_vendedor(), venda.getData_venda() });
+            }
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+    }
+
+    // Método para atualizar combobox
+    public void atualizarClientesComboBox(){
+        clientesComboBox.removeAllItems();
+        clientesComboBox.addItem(null);
+        try {
+            pessoas = new PessoasDAO().readAll();
+            for (Pessoa cliente : pessoas) {
+                clientesComboBox.addItem(String.valueOf(cliente.getCpf()));
+            }
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+    }
+
+    public void atualizarCarrosComboBox(){
+        carrosComboBox.removeAllItems();
+        carrosComboBox.addItem(null);
+        try {
+            carros = new CarrosDAO().readIs_vendido();
+            for (Carro carro : carros) {
+                carrosComboBox.addItem(carro.getPlaca());
             }
         } catch (SQLException e) {
             e.printStackTrace();

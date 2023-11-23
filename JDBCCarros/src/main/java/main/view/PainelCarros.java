@@ -6,6 +6,7 @@ import java.util.List;
 import javax.swing.BoxLayout;
 import javax.swing.JButton;
 import javax.swing.JLabel;
+import javax.swing.JOptionPane;
 import javax.swing.JPanel;
 import javax.swing.JScrollPane;
 import javax.swing.JTable;
@@ -74,7 +75,7 @@ public class PainelCarros extends JPanel {
 
         JPanel botoes = new JPanel();
         botoes.add(cadastrar = new JButton("Cadastrar"));
-        botoes.add(editar = new JButton("Editar"));
+        botoes.add(editar = new JButton("Atualizar"));
         botoes.add(apagar = new JButton("Apagar"));
 
         this.add(botoes);
@@ -112,20 +113,20 @@ public class PainelCarros extends JPanel {
             public void mouseClicked(MouseEvent evt) {
                 carrosControl = new CarrosControl(carros, tableModel, table);
 
-                carrosControl.createCarro(carPlacaField.getText(), Short.valueOf(carAnoField.getText()), carMarcaField.getText(), carModeloField.getText(), carCorField.getText(), Double.valueOf(carPrecoField.getText()));
-
-                // Resetando os campos
-                carPlacaField.setText("");
-                carAnoField.setText("");
-                carMarcaField.setText("");
-                carModeloField.setText("");
-                carCorField.setText("");
-                carPrecoField.setText("");
-
-                // Atualizar tabela do painel de Carros
-                atualizarTabela();
-                // Atualizar listagem do painel de vendas
-                painelVendas = new PainelVendas(logado);                
+                if(carrosControl.checkCarroCampos(-1, "cadastrar", carPlacaField.getText(), carAnoField.getText(), carMarcaField.getText(), carModeloField.getText(), carCorField.getText(), carPrecoField.getText())){
+                    // Resetando os campos
+                    carPlacaField.setText("");
+                    carAnoField.setText("");
+                    carMarcaField.setText("");
+                    carModeloField.setText("");
+                    carCorField.setText("");
+                    carPrecoField.setText("");
+    
+                    // Atualizar tabela do painel de Carros
+                    atualizarTabela();
+                    // Atualizar listagem do painel de vendas
+                    painelVendas = new PainelVendas(logado);                
+                }
             }
         });
 
@@ -135,12 +136,21 @@ public class PainelCarros extends JPanel {
             public void mouseClicked(MouseEvent evt){
                 carrosControl = new CarrosControl(carros, tableModel, table);
 
-                carrosControl.updateCarro(linhaSelecionada, carPlacaField.getText(), Short.valueOf(carAnoField.getText()), carMarcaField.getText(), carModeloField.getText(), carCorField.getText(), Double.valueOf(carPrecoField.getText()));
+                if(carrosControl.checkCarroCampos(linhaSelecionada, "atualizar", carPlacaField.getText(), carAnoField.getText(), carMarcaField.getText(), carModeloField.getText(), carCorField.getText(), carPrecoField.getText())){
+                    // Resetando os campos
+                    carPlacaField.setText("");
+                    carAnoField.setText("");
+                    carMarcaField.setText("");
+                    carModeloField.setText("");
+                    carCorField.setText("");
+                    carPrecoField.setText("");
+                    
+                    // Atualizar tabela do painel de Carros
+                    atualizarTabela();
+                    // Atualizar listagem do painel de vendas
+                    painelVendas = new PainelVendas(logado);    
+                }
 
-                // Atualizar tabela do painel de Carros
-                atualizarTabela();
-                // Atualizar listagem do painel de vendas
-                painelVendas = new PainelVendas(logado);    
             }
         });
 
@@ -150,20 +160,20 @@ public class PainelCarros extends JPanel {
             public void mouseClicked(MouseEvent evt){
                 carrosControl = new CarrosControl(carros, tableModel, table);
 
-                carrosControl.deleteCarro(linhaSelecionada, carPlacaField.getText());
-
-                // Resetando os campos
-                carPlacaField.setText("");
-                carAnoField.setText("");
-                carMarcaField.setText("");
-                carModeloField.setText("");
-                carCorField.setText("");
-                carPrecoField.setText("");
-
-                // Atualizar tabela do painel de Carros
-                atualizarTabela();
-                // Atualizar listagem do painel de vendas
-                painelVendas = new PainelVendas(logado);    
+                if(carrosControl.checkCarroCampos(linhaSelecionada, "deletar", carPlacaField.getText(), carAnoField.getText(), carMarcaField.getText(), carModeloField.getText(), carCorField.getText(), carPrecoField.getText())){
+                    // Resetando os campos
+                    carPlacaField.setText("");
+                    carAnoField.setText("");
+                    carMarcaField.setText("");
+                    carModeloField.setText("");
+                    carCorField.setText("");
+                    carPrecoField.setText("");
+    
+                    // Atualizar tabela do painel de Carros
+                    atualizarTabela();
+                    // Atualizar listagem do painel de vendas
+                    painelVendas = new PainelVendas(logado);    
+                }
             }
         });
     }

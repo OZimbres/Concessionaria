@@ -3,6 +3,7 @@ package main.control;
 import java.sql.SQLException;
 import java.util.List;
 
+import javax.swing.JOptionPane;
 import javax.swing.JTable;
 import javax.swing.table.DefaultTableModel;
 
@@ -80,5 +81,84 @@ public class CarrosControl {
             linha[4] = carros.get(i).getCor();
             linha[5] = carros.get(i).getPreco();
         }
+    }
+
+    //---=| CHECAGEM DE CAMPO |=---//
+    public boolean checkCarroCampos(Integer linhaSelecionada, String operacao, String placa, String ano, String marca, String modelo, String cor, String preco) {
+        // Verifica se os campos estão preenchidos
+        if (placa.isEmpty() || ano.isEmpty() || marca.isEmpty() || modelo.isEmpty() || cor.isEmpty() || preco.isEmpty()) {
+            JOptionPane.showMessageDialog(null, "ATENÇÃO!\nExiste campos em branco");
+            return false;
+        }    
+        // Verifica o formato da placa
+        if (!validarFormatoPlaca(placa)) {
+            JOptionPane.showMessageDialog(null, "Insira o formato válido de placa!\nAAA-1111");
+            return false;
+        }
+        // Verifica se o ano é numérico
+        if (!validarFormatoAno(ano)) {
+            JOptionPane.showMessageDialog(null, "Insira um formato válido de ano!\n1111");
+            return false;
+        }    
+        // Verifica se o preço é numérico
+        if (!validarFormatoPreco(preco)) {
+            JOptionPane.showMessageDialog(null, "Insira um formato válido de preço!");
+            return false;
+        }
+    
+        if(operacao.equals("cadastrar")){
+            int resposta = JOptionPane.showConfirmDialog(null,"Realizar cadastro?", "Confirmação", JOptionPane.YES_NO_OPTION);
+            if (resposta == JOptionPane.YES_OPTION) {
+                // Executa a operação de cadastrar
+                createCarro(placa, Short.valueOf(ano), marca, modelo, cor, Double.valueOf(preco));
+            }
+        }
+        else if(operacao.equals("atualizar")){
+            int resposta = JOptionPane.showConfirmDialog(null,"Realizar exclusão?", "Confirmação", JOptionPane.YES_NO_OPTION);
+            if (resposta == JOptionPane.YES_OPTION) {
+                deleteCarro(linhaSelecionada, placa);
+            }
+        }
+        else{
+            int resposta = JOptionPane.showConfirmDialog(null,"Realizar edição?", "Confirmação", JOptionPane.YES_NO_OPTION);
+            if (resposta == JOptionPane.YES_OPTION) {
+                updateCarro(linhaSelecionada, placa, Short.valueOf(ano), marca, modelo, cor, Double.valueOf(preco));
+            }
+        }
+        return true;
+    }
+
+    // Método para validar o formato da placa
+    private boolean validarFormatoPlaca(String placa) {
+        // Expressão regular para validar o formato da placa
+        String regex = "[A-Z]{3}-\\d{4}$";
+
+        // Remove espaços em branco antes e depois da placa
+        placa = placa.trim();
+
+        // Verifica se a placa corresponde à expressão regular
+        return placa.matches(regex);
+    }
+    // Método para validar o formato do número (máximo 4 dígitos)
+    private boolean validarFormatoAno(String numero) {
+        // Expressão regular para validar o formato do número
+        String regex = "^[0-9]{1,4}$";
+
+        // Remove espaços em branco antes e depois do número
+        numero = numero.trim();
+
+        // Verifica se o número corresponde à expressão regular
+        return numero.matches(regex);
+    }
+    // Método para validar o formato do preço
+    private boolean validarFormatoPreco(String preco) {
+        // Expressão regular para validar o formato do preço
+        String regex = "^[0-9]+(\\.[0-9]+)?$";
+
+        // Remove espaços em branco antes e depois do preço
+        preco = preco.trim();
+
+        // Verifica se o preço corresponde à expressão regular
+        return preco.matches(regex);
     }
 }

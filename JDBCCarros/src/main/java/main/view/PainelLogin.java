@@ -38,7 +38,7 @@ public class PainelLogin extends JFrame {
     // Botão Entrar/Criar
     private JButton botaoAcessar = new JButton("Acessar");
     
-    private LoginControl loginControl;
+    private LoginControl loginControl = new LoginControl();
 
     // ArrayList dos componentes a serem exibidos
     ArrayList<JComponent> componentes = new ArrayList<JComponent>() {
@@ -59,10 +59,6 @@ public class PainelLogin extends JFrame {
     //-----===| CONSTRUTOR |===-----//
     public PainelLogin() {
         super();
-
-        // Inicializando LoginControl
-        loginControl = new LoginControl();
-
         // Adicionando mainPanel ao JFrame
         this.add(mainPanel);
         // Setando layout
@@ -123,17 +119,13 @@ public class PainelLogin extends JFrame {
         // Handler para acessar
         botaoAcessar.addActionListener(e -> { // Listener do botão
             try {
-                boolean logged = loginControl.verifyLogin(Long.valueOf(cpfInput.getText()), senhaInput.getText());
-                if(logged){
+                if(loginControl.checkLogin(cpfInput.getText(), senhaInput.getText())){
                     Login logado = new Login(Long.valueOf(cpfInput.getText()));
                     dispose();
-                    JOptionPane.showMessageDialog(null, "Login realizado com sucesso");
                     new FrameApp(logado);
+                    JOptionPane.showMessageDialog(null, "Login realizado com sucesso");
                 }
-                else{
-                    JOptionPane.showMessageDialog(null, "Acesso Negado!\nÉ necessário ser funcionário ou inserir os campos corretamente.");
-                }
-            }catch (SQLException e1) {
+            }catch (Exception e1) {
                 e1.printStackTrace();
             }
         });

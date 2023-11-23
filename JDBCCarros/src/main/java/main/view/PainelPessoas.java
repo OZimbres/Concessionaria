@@ -121,29 +121,22 @@ public class PainelPessoas extends JPanel {
             public void mouseClicked(MouseEvent evt) {
                 pessoasControl = new PessoasControl(pessoas, tableModel, table);
 
-                // Variáveis temporárias
-                Long cpf = Long.valueOf(pessoaCpfField.getText());
-                String nome = pessoaNomeField.getText();
-                Long telefone = Long.valueOf(pessoaTelefoneField.getText());
-                String rua = pessoaRuaField.getText();
-                String numero = pessoaNumeroField.getText();
-                Integer cep = Integer.valueOf(pessoaCepField.getText());
-                String senha = pessoaSenhaField.getText();
+                // Variável temporária
                 Boolean funcionario = pessoaFuncionarioField.isSelected();
-                // Passando variaveis temporárias como parâmetro
-                pessoasControl.createPessoa(cpf, nome, telefone, rua, numero, cep, senha, funcionario);
-
-                // Resetando os campos
-                pessoaCpfField.setText("");
-                pessoaNomeField.setText("");
-                pessoaTelefoneField.setText("");
-                pessoaRuaField.setText("");
-                pessoaNumeroField.setText("");
-                pessoaCepField.setText("");
-                pessoaSenhaField.setText("");
-                pessoaFuncionarioField.setSelected(false);
-
-                atualizarTabela();
+                
+                if(pessoasControl.checkPessoasCampos(-1, "cadastrar", pessoaCpfField.getText(), pessoaNomeField.getText(), pessoaTelefoneField.getText(), pessoaRuaField.getText(), pessoaNumeroField.getText(), pessoaCepField.getText(), pessoaSenhaField.getText(), funcionario)){
+                    // Resetando os campos
+                    pessoaCpfField.setText("");
+                    pessoaNomeField.setText("");
+                    pessoaTelefoneField.setText("");
+                    pessoaRuaField.setText("");
+                    pessoaNumeroField.setText("");
+                    pessoaCepField.setText("");
+                    pessoaSenhaField.setText("");
+                    pessoaFuncionarioField.setSelected(false);
+                    // Atualizar tabela do painel de Carros
+                    atualizarTabela(); 
+                }
             }
         });
 

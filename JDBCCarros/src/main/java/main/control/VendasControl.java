@@ -33,7 +33,8 @@ public class VendasControl {
 
             System.out.println("msg1");
             // Atributos temporários para a instanciação do objeto Venda
-            Venda venda = new Venda(vendasDAO.get_id_venda(placa_carro), placa_carro, cpf_cliente, cpf_vendedor, data_venda);
+            VendasDAO vendasDAO2 = new VendasDAO();
+            Venda venda = new Venda(vendasDAO2.get_id_venda(placa_carro), placa_carro, cpf_cliente, cpf_vendedor, data_venda);
             System.out.println("msg2");
             vendas.add(venda);
             System.out.println("msg3");

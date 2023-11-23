@@ -3,6 +3,7 @@ package main.control;
 import java.sql.SQLException;
 import java.util.List;
 
+import javax.swing.JOptionPane;
 import javax.swing.JTable;
 import javax.swing.table.DefaultTableModel;
 
@@ -81,5 +82,64 @@ public class PessoasControl {
             linha[6] = pessoas.get(i).getSenha();
             linha[7] = pessoas.get(i).getFuncionario();
         }
+    }
+
+    //---=| CHECAGEM DE CAMPO |=---//
+    public boolean checkPessoasCampos(Integer linhaSelecionada, String operacao, String cpf, String nome, String telefone, String rua, String numero, String cep, String senha, boolean funcionario) {
+        // Verifica se os campos estão preenchidos
+        if (cpf.isEmpty() || nome.isEmpty() || telefone.isEmpty() || rua.isEmpty() || numero.isEmpty() || cep.isEmpty() || senha.isEmpty()) {
+            JOptionPane.showMessageDialog(null, "ATENÇÃO!\nExiste campos em branco");
+            return false;
+        }    
+        if(!validarFormatoCPF(cpf)){
+            JOptionPane.showMessageDialog(null, "CPF inválido!\nO CPF deve conter apenas números e ter 11 dígitos!");
+            return false;
+        }
+        if(!validarFormatoTelefone(telefone)){
+            JOptionPane.showMessageDialog(null, "Telefone inválido!\nO Telefone deve conter apenas números e ter entre 9 e 11 dígitos!");
+            return false;
+        }
+        if(!validarFormatoNumero(numero)){
+            JOptionPane.showMessageDialog(null, "Número inválido!\nO Número deve conter até 10 dígitos e no máximo 1 letra!");
+            return false;
+        }
+        if(!validarFormatoCEP(cep)){
+            JOptionPane.showMessageDialog(null, "CEP inválido!\nO CEP deve conter apenas números e ter 8 dígitos!");
+            return false;
+        }
+
+        if(operacao.equals("cadastrar")){
+            int resposta = JOptionPane.showConfirmDialog(null,"Realizar cadastro?", "Confirmação", JOptionPane.YES_NO_OPTION);
+            if (resposta == JOptionPane.YES_OPTION) {
+                // Executa a operação de cadastrar
+                createPessoa(Long.valueOf(cpf), nome, Long.valueOf(telefone), rua, numero, Integer.valueOf(cep), senha, funcionario);
+            }
+        }
+    }
+
+    // Método para validar o formato do CPF
+    private boolean validarFormatoCPF(String cpf) {
+        cpf = cpf.replaceAll("[^0-9]", "");
+        return cpf.length() == 11;
+    }
+    private static boolean validarFormatoTelefone(String telefone) {
+        // Remove qualquer caractere não numérico
+        String numeroLimpo = telefone.replaceAll("[^0-9]", "");
+        // Verifica se o número de caracteres está entre 9 e 11
+        return numeroLimpo.length() >= 9 && numeroLimpo.length() <= 11;
+    }
+    // Método para validar o formato da entrada (máximo 10 caracteres, permitindo números e até 1 letra)
+    private boolean validarFormatoNumero(String numero) {
+        // Expressão regular para validar o formato da entrada
+        String regex = "^[a-zA-Z0-9]{0,1}[0-9]{0,9}$";
+        // Remove espaços em branco antes e depois da entrada
+        numero = numero.trim();
+        // Verifica se a entrada corresponde à expressão regular
+        return numero.matches(regex);
+    }
+    // Método para validar a quantidade de caracteres
+    private boolean validarFormatoCEP(String cep) {
+        cep = cep.replaceAll("[^0-9]", "");
+        return cep.length() == 8;
     }
 }

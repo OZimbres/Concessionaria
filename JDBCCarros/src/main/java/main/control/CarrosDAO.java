@@ -37,12 +37,12 @@ public class CarrosDAO {
             preparedStatement.setDouble(6, preco);
             preparedStatement.execute();
 
-            System.out.println("Dados inseridos com sucesso");
+            JOptionPane.showMessageDialog(null, "Carro cadastrado com sucesso!");
 
             ConnectionFactory.closePreparedStatement(preparedStatement);
             ConnectionFactory.closeConnection(connection);
         } catch (SQLException e) {
-            throw new RuntimeException("Erro ao inserir dados no banco de dados.", e);
+            JOptionPane.showMessageDialog(null, "Não é possível cadastrar novo carro com esta placa.\n Placa está em uso!");
         } finally {
             ConnectionFactory.closePreparedStatement(preparedStatement);
             ConnectionFactory.closeConnection(this.connection);
@@ -155,8 +155,8 @@ public class CarrosDAO {
             preparedStatement.setDouble(5, preco);
             preparedStatement.setString(6, placa);
             preparedStatement.execute();
-
-            System.out.println("Dados atualizados com sucesso");
+            
+            JOptionPane.showMessageDialog(null, "Carro atualizado com sucesso!");
 
             ConnectionFactory.closePreparedStatement(preparedStatement);
             ConnectionFactory.closeConnection(connection);
