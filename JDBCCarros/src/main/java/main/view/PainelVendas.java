@@ -106,7 +106,7 @@ public class PainelVendas extends JPanel {
         // Tabela das Vendas
         JScrollPane jSPane = new JScrollPane();
         this.add(jSPane);
-        tableModel = new DefaultTableModel(new Object[][] {}, new String[] {"Venda ID", "Placa", "Cliente", "Vendedor", "Data"});
+        tableModel = new DefaultTableModel(new Object[][] {}, new String[] {"ID Venda", "Vendedor", "Cliente", "Placa", "Marca", "Modelo", "Cor", "Data Venda", "Preço Venda"});
         table = new JTable(tableModel);
         jSPane.setViewportView(table);
 
@@ -151,24 +151,22 @@ public class PainelVendas extends JPanel {
         cadastrarVenda.addMouseListener(new MouseAdapter() {
             public void mouseClicked(MouseEvent evt){
                 vendasControl = new VendasControl(vendas, tableModel, table);
-
+                
                 // variáveis temporárias
-                String placaCarroSelecionado = (String) carrosComboBox.getSelectedItem();
-                Long cpfClienteSelecionado = Long.valueOf((String) clientesComboBox.getSelectedItem());
                 dataAtual = Calendar.getInstance().getTime();
                 dataAtualSql = new Date(dataAtual.getTime());
 
-                vendasControl.createVenda(placaCarroSelecionado, cpfClienteSelecionado, logado.getCpf(), dataAtualSql);
-
-                // Resetando campos
-                clientesComboBox.setSelectedIndex(0);
-                infoCliente.setText("");
-                carrosComboBox.setSelectedIndex(0);
-                infoCarro.setText("");
-                atualizarClientesComboBox();
-                atualizarCarrosComboBox();
-
-                atualizarTabela();
+                if(vendasControl.checkVendaCampos(String.valueOf(carrosComboBox.getSelectedItem()), String.valueOf(clientesComboBox.getSelectedItem()), String.valueOf(logado.getCpf()), dataAtualSql)){
+                    // Resetando campos
+                    clientesComboBox.setSelectedIndex(0);
+                    infoCliente.setText("");
+                    carrosComboBox.setSelectedIndex(0);
+                    infoCarro.setText("");
+                    atualizarClientesComboBox();
+                    atualizarCarrosComboBox();
+    
+                    atualizarTabela();
+                }
             }
         });
     }
@@ -179,7 +177,12 @@ public class PainelVendas extends JPanel {
         try {
             vendas = new VendasDAO().readAll();
             for (Venda venda : vendas) {
-                tableModel.addRow(new Object[] { venda.getId_venda(), venda.getPlaca_carro(), venda.getCpf_cliente(), venda.getCpf_vendedor(), venda.getData_venda() });
+                // Pegando valor do cliente e do vendedor envolvidos na compra
+                Pessoa cliente = new PessoasDAO().read(Long.valueOf(venda.getCpf_cliente()));
+                Pessoa vendedor = new PessoasDAO().read(Long.valueOf(venda.getCpf_vendedor()));
+                Carro carro = new CarrosDAO().read(venda.getPlaca_carro());
+
+                tableModel.addRow(new Object[] { venda.getId_venda(), vendedor.getNome(), cliente.getNome(), venda.getPlaca_carro(), carro.getMarca(), carro.getModelo(), carro.getCor(), venda.getData_venda(), String.format("%,.2f", carro.getPreco()) });
             }
         } catch (SQLException e) {
             e.printStackTrace();
@@ -198,6 +201,8 @@ public class PainelVendas extends JPanel {
         } catch (SQLException e) {
             e.printStackTrace();
         }
+
+        atualizarTabela();
     }
 
     public void atualizarCarrosComboBox(){
@@ -211,5 +216,7 @@ public class PainelVendas extends JPanel {
         } catch (SQLException e) {
             e.printStackTrace();
         }
+
+        atualizarTabela();
     }
 }

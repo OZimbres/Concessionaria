@@ -85,7 +85,7 @@ public class PessoasControl {
     }
 
     //---=| CHECAGEM DE CAMPO |=---//
-    public boolean checkPessoasCampos(Integer linhaSelecionada, String operacao, String cpf, String nome, String telefone, String rua, String numero, String cep, String senha, boolean funcionario) {
+    public boolean checkPessoasCampos(int linhaSelecionada, String operacao, String cpf, String nome, String telefone, String rua, String numero, String cep, String senha, boolean funcionario) {
         // Verifica se os campos estão preenchidos
         if (cpf.isEmpty() || nome.isEmpty() || telefone.isEmpty() || rua.isEmpty() || numero.isEmpty() || cep.isEmpty() || senha.isEmpty()) {
             JOptionPane.showMessageDialog(null, "ATENÇÃO!\nExiste campos em branco");
@@ -112,7 +112,21 @@ public class PessoasControl {
             int resposta = JOptionPane.showConfirmDialog(null,"Realizar cadastro?", "Confirmação", JOptionPane.YES_NO_OPTION);
             if (resposta == JOptionPane.YES_OPTION) {
                 // Executa a operação de cadastrar
-                createPessoa(Long.valueOf(cpf), nome, Long.valueOf(telefone), rua, numero, Integer.valueOf(cep), senha, funcionario);
+                createPessoa(Long.valueOf(cpf.trim()), nome.trim(), Long.valueOf(telefone.trim()), rua.trim(), numero.trim(), Integer.valueOf(cep.trim()), senha.trim(), funcionario);
+            }
+        }
+        else if(operacao.equals("atualizar")){
+            int resposta = JOptionPane.showConfirmDialog(null,"Realizar edição?", "Confirmação", JOptionPane.YES_NO_OPTION);
+            if (resposta == JOptionPane.YES_OPTION) {
+                // Executa a operação de editar
+                updatePessoa(linhaSelecionada, Long.valueOf(cpf.trim()), nome.trim(), Long.valueOf(telefone.trim()), rua.trim(), numero.trim(), Integer.valueOf(cep.trim()), senha, funcionario);
+            }
+        }
+        else{
+            int resposta = JOptionPane.showConfirmDialog(null,"Realizar exclusão?", "Confirmação", JOptionPane.YES_NO_OPTION);
+            if (resposta == JOptionPane.YES_OPTION) {
+                // Executa a opção de deletar
+                deletePessoa(linhaSelecionada, Long.valueOf(cpf.trim()));
             }
         }
         return true;

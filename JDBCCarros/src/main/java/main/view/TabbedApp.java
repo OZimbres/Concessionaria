@@ -21,6 +21,7 @@ public class TabbedApp extends JTabbedPane {
         this.addChangeListener(e -> {
             painelVendas.atualizarClientesComboBox();
             painelVendas.atualizarCarrosComboBox();
+            painelCarros.atualizarPainelCarros();
         });
     }
 }

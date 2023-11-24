@@ -31,13 +31,10 @@ public class VendasControl {
         try {
             vendasDAO.create(placa_carro, cpf_cliente, cpf_vendedor, data_venda);
 
-            System.out.println("msg1");
             // Atributos temporários para a instanciação do objeto Venda
             VendasDAO vendasDAO2 = new VendasDAO();
             Venda venda = new Venda(vendasDAO2.get_id_venda(placa_carro), placa_carro, cpf_cliente, cpf_vendedor, data_venda);
-            System.out.println("msg2");
             vendas.add(venda);
-            System.out.println("msg3");
 
             atualizarTabela();
         } 
@@ -60,5 +57,20 @@ public class VendasControl {
             linha[3] = vendas.get(i).getCpf_cliente();
             linha[4] = vendas.get(i).getCpf_vendedor();
         }
+    }
+
+    public boolean checkVendaCampos(String placa_carro, String cpf_cliente, String cpf_vendedor, Date data_venda){
+        // Verifica se os campos estão preenchidos
+        if (placa_carro.isEmpty() || cpf_cliente.isEmpty() || cpf_vendedor.isEmpty() || String.valueOf(data_venda).isEmpty()) {
+            JOptionPane.showMessageDialog(null, "ATENÇÃO!\nExiste campos em branco");
+            return false;
+        }
+
+        int resposta = JOptionPane.showConfirmDialog(null,"Realizar venda?", "Confirmação", JOptionPane.YES_NO_OPTION);
+        if (resposta == JOptionPane.YES_OPTION) {
+            // Executa a operação de cadastrar
+            createVenda(placa_carro, Long.valueOf(cpf_cliente), Long.valueOf(cpf_vendedor), data_venda);
+        }
+        return true;
     }
 }

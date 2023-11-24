@@ -102,7 +102,7 @@ public class PainelCarros extends JPanel {
                     carMarcaField.setText(String.valueOf(table.getValueAt(linhaSelecionada, 2).toString()));
                     carModeloField.setText(String.valueOf(table.getValueAt(linhaSelecionada, 3)));
                     carCorField.setText(String.valueOf(table.getValueAt(linhaSelecionada, 4).toString()));
-                    carPrecoField.setText(String.valueOf(table.getValueAt(linhaSelecionada, 5).toString()));
+                    carPrecoField.setText(String.valueOf(table.getValueAt(linhaSelecionada, 5).toString().replaceAll("[.]", "").replace(",",".")));
                 }
             }
         });
@@ -190,12 +190,16 @@ public class PainelCarros extends JPanel {
                 linha[2] = carros.get(i).getMarca();
                 linha[3] = carros.get(i).getModelo();
                 linha[4] = carros.get(i).getCor();
-                linha[5] = carros.get(i).getPreco();
+                linha[5] = String.format("%,.2f", carros.get(i).getPreco());
                 linha[6] = (carros.get(i).getVendido()) ? "Vendido" : "Disponível";
                 tableModel.addRow(linha);
             }
         } catch (SQLException e) {
             e.printStackTrace();
         }
+    }
+
+    public void atualizarPainelCarros(){
+        atualizarTabela();
     }
 }

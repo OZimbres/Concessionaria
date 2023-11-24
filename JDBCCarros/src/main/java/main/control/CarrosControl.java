@@ -110,19 +110,19 @@ public class CarrosControl {
             int resposta = JOptionPane.showConfirmDialog(null,"Realizar cadastro?", "Confirmação", JOptionPane.YES_NO_OPTION);
             if (resposta == JOptionPane.YES_OPTION) {
                 // Executa a operação de cadastrar
-                createCarro(placa, Short.valueOf(ano), marca, modelo, cor, Double.valueOf(preco));
+                createCarro(placa.trim(), Short.valueOf(ano.trim()), marca.trim(), modelo.trim(), cor.trim(), Double.valueOf(preco.trim()));
             }
         }
         else if(operacao.equals("atualizar")){
-            int resposta = JOptionPane.showConfirmDialog(null,"Realizar exclusão?", "Confirmação", JOptionPane.YES_NO_OPTION);
-            if (resposta == JOptionPane.YES_OPTION) {
-                deleteCarro(linhaSelecionada, placa);
-            }
-        }
-        else{
             int resposta = JOptionPane.showConfirmDialog(null,"Realizar edição?", "Confirmação", JOptionPane.YES_NO_OPTION);
             if (resposta == JOptionPane.YES_OPTION) {
-                updateCarro(linhaSelecionada, placa, Short.valueOf(ano), marca, modelo, cor, Double.valueOf(preco));
+                updateCarro(linhaSelecionada, placa.trim(), Short.valueOf(ano.trim()), marca.trim(), modelo.trim(), cor.trim(), Double.valueOf(preco.trim()));
+            }
+        }
+        else {
+            int resposta = JOptionPane.showConfirmDialog(null,"Realizar exclusão?", "Confirmação", JOptionPane.YES_NO_OPTION);
+            if (resposta == JOptionPane.YES_OPTION) {
+                deleteCarro(linhaSelecionada, placa.trim());
             }
         }
         return true;

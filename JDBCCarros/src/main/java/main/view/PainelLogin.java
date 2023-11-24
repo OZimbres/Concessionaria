@@ -136,7 +136,7 @@ public class PainelLogin extends JFrame {
     //---=| Rodar Aplicação |=---//
     public void run(){
         //---=| Setando o Frame |=---//
-        this.setTitle("Validação");
+        this.setTitle("CONSCESSIONÁRIA ASJ");
         this.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
         this.setVisible(true);
         this.setSize(500, 600);
