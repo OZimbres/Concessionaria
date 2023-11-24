@@ -8,6 +8,7 @@ import javax.swing.BoxLayout;
 import javax.swing.JButton;
 import javax.swing.JComboBox;
 import javax.swing.JLabel;
+import javax.swing.JOptionPane;
 import javax.swing.JPanel;
 import javax.swing.JScrollPane;
 import javax.swing.JTable;
@@ -21,7 +22,6 @@ import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
 
 import main.control.CarrosDAO;
-import main.control.LoginControl;
 import main.control.PessoasDAO;
 import main.control.VendasControl;
 import main.control.VendasDAO;
@@ -156,16 +156,21 @@ public class PainelVendas extends JPanel {
                 dataAtual = Calendar.getInstance().getTime();
                 dataAtualSql = new Date(dataAtual.getTime());
 
-                if(vendasControl.checkVendaCampos(String.valueOf(carrosComboBox.getSelectedItem()), String.valueOf(clientesComboBox.getSelectedItem()), String.valueOf(logado.getCpf()), dataAtualSql)){
-                    // Resetando campos
-                    clientesComboBox.setSelectedIndex(0);
-                    infoCliente.setText("");
-                    carrosComboBox.setSelectedIndex(0);
-                    infoCarro.setText("");
-                    atualizarClientesComboBox();
-                    atualizarCarrosComboBox();
-    
-                    atualizarTabela();
+                if(carrosComboBox.getSelectedItem() == null || clientesComboBox.getSelectedItem() == null){
+                    JOptionPane.showMessageDialog(null, "ATENÇÃO!\nExiste campos em branco");
+                }
+                else{
+                    if(vendasControl.checkVendaCampos(String.valueOf(carrosComboBox.getSelectedItem()), String.valueOf(clientesComboBox.getSelectedItem()), String.valueOf(logado.getCpf()), dataAtualSql)){
+                        // Resetando campos
+                        clientesComboBox.setSelectedIndex(0);
+                        infoCliente.setText("");
+                        carrosComboBox.setSelectedIndex(0);
+                        infoCarro.setText("");
+                        atualizarClientesComboBox();
+                        atualizarCarrosComboBox();
+        
+                        atualizarTabela();
+                    }
                 }
             }
         });
